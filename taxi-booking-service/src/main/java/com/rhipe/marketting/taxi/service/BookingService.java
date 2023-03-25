@@ -3,9 +3,9 @@ package com.rhipe.marketting.taxi.service;
 import com.rhipe.marketting.taxi.model.Booking;
 import com.rhipe.marketting.taxi.repository.BookingRepository;
 import com.rhipe.marketting.taxi.repository.TaxiRepository;
-import com.rhipe.marketting.taxi.rest.TaxiBookingDTO;
-import jakarta.transaction.Transactional;
+import com.rhipe.travel.booking.dto.TaxiBookingDTO;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -20,12 +20,13 @@ public class BookingService {
         this.taxiRepository = taxiRepository;
     }
 
-    public Optional<Booking> bookTaxi(TaxiBookingDTO taxiBookingDTO) {
-        return taxiRepository.findById(taxiBookingDTO.taxiId())
-                .map(t -> bookingRepository.save(new Booking(taxiBookingDTO.customerId(), t)));
+    public Booking bookTaxi(TaxiBookingDTO taxiBookingDTO) {
+        return taxiRepository.findById(taxiBookingDTO.getTaxiId())
+                .map(t -> bookingRepository.save(new Booking(taxiBookingDTO.getCustomerId(), t)))
+                .orElseThrow(() -> new RuntimeException("Unable to book taxi with id: "+taxiBookingDTO.getTaxiId()));
     }
 
-    public boolean compensate(long bookingId) {
+    public boolean cancelBooking(long bookingId) {
         bookingRepository.deleteById(bookingId);
         return true;
     }

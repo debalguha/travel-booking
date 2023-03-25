@@ -1,12 +1,10 @@
 package com.rhipe.marketting.flight.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.util.Set;
 
@@ -14,12 +12,13 @@ import java.util.Set;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 public class Flight {
     @Id
     @GeneratedValue
-    private long id;
+    private Long id;
     private String name;
 
-    @OneToMany(mappedBy = "flight")
+    @OneToMany(mappedBy = "flight", cascade = CascadeType.ALL)
     private Set<Seat> seats;
 }

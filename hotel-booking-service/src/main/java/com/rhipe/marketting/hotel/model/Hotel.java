@@ -1,9 +1,6 @@
 package com.rhipe.marketting.hotel.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,9 +14,9 @@ import java.util.Set;
 public class Hotel {
     @Id
     @GeneratedValue
-    private long id;
+    private Long id;
     private String hotelName;
 
-    @OneToMany(mappedBy = "hotel")
+    @OneToMany(mappedBy = "hotel", cascade = CascadeType.ALL)
     private Set<Room> rooms;
 }

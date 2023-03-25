@@ -21,22 +21,31 @@ import java.util.stream.IntStream;
 public class DataSetupService implements CommandLineRunner {
 
     final HotelRepository hotelRepository;
+
     @Override
     public void run(String... args) throws Exception {
         final EasyRandom easyRandom = new EasyRandom(
-                new EasyRandomParameters().excludeField(
-                        FieldPredicates.named("id")
+                new EasyRandomParameters()
+                        .excludeField(FieldPredicates.named("id")
+                                        .and(FieldPredicates.ofType(Long.class))
+                                        .and(FieldPredicates.inClass(Hotel.class))
+                        ).excludeField(FieldPredicates.named("id")
                                 .and(FieldPredicates.ofType(Long.class))
-                                .and(FieldPredicates.inClass(Hotel.class))
-                ).excludeField(FieldPredicates.named("id")
-                        .and(FieldPredicates.ofType(Long.class))
-                        .and(FieldPredicates.inClass(Room.class))
-                )
+                                .and(FieldPredicates.inClass(Room.class))
+                        ).excludeField(FieldPredicates.named("hotel")
+                                .and(FieldPredicates.ofType(Hotel.class))
+                                .and(FieldPredicates.inClass(Room.class))
+                        )
         );
-        List<Hotel> flights = IntStream.range(0, 10)
+        List<Hotel> hotels = IntStream.range(0, 10)
                 .mapToObj(i -> easyRandom.nextObject(Hotel.class))
-                .map(taxi -> hotelRepository.save(taxi))
-                .collect(Collectors.toList());
-        log.info("Flights created {}"+flights.size());
+                .peek(h -> log.info(h.toString()))
+                .map(h -> {
+                    h.getRooms().forEach(s -> s.setHotel(h));
+                    return h;
+                })
+                .map(hotelRepository::save)
+                .toList();
+        log.info("Hotels created {}", hotels.size());
     }
 }

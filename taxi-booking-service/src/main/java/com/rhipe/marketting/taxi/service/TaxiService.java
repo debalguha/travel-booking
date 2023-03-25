@@ -12,7 +12,9 @@ import java.util.Optional;
 public class TaxiService {
     final TaxiRepository taxiRepository;
 
-    public Optional<Taxi> lookupSeat(long taxiId) {
+    public Optional<Taxi> lookupTaxi(long taxiId) {
         return taxiRepository.findById(taxiId);
     }
+
+
 }

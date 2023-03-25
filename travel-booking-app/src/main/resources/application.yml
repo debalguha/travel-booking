@@ -1,0 +1,21 @@
+server:
+  port: 80
+  datasource:
+    url: jdbc:h2:mem:mydb
+    username: sa
+    password: password
+    driverClassName: org.h2.Driver
+  jpa:
+    spring.jpa.database-platform: org.hibernate.dialect.H2Dialect
+
+camel:
+  lra:
+    enabled: true
+    coordinator-url: http://coordinator
+    local-participant-url: http://sbtravelsv/api
+  servlet:
+    mapping:
+      context-path: /api/*
+      enabled: true
+  springboot:
+    main-run-controller: true

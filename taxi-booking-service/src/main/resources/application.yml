@@ -1,5 +1,5 @@
 server:
-#  port: 8081
+  port: 80
 #  servlet:
 #    context-path: /api
   datasource:
@@ -9,3 +9,15 @@ server:
     driverClassName: org.h2.Driver
   jpa:
     spring.jpa.database-platform: org.hibernate.dialect.H2Dialect
+
+camel:
+  lra:
+    enabled: true
+    coordinator-url: http://coordinator
+    local-participant-url: http://sbtaxisvsv/api
+  servlet:
+    mapping:
+      context-path: /api/*
+      enabled: true
+  springboot:
+    main-run-controller: true

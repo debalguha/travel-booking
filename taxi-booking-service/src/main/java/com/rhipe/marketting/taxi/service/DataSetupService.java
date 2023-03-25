@@ -29,10 +29,11 @@ public class DataSetupService implements CommandLineRunner {
                                 .and(FieldPredicates.inClass(Taxi.class))
                 )
         );
-        List<Taxi> flights = IntStream.range(0, 10)
+        List<Taxi> taxis = IntStream.range(0, 10)
                 .mapToObj(i -> easyRandom.nextObject(Taxi.class))
-                .map(taxi -> taxiRepository.save(taxi))
-                .collect(Collectors.toList());
-        log.info("Flights created {}"+flights.size());
+                .map(taxiRepository::save)
+                .peek(t -> log.info(t.toString()))
+                .toList();
+        log.info("taxis created {}", taxis.size());
     }
 }

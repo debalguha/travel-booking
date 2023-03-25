@@ -1,0 +1,58 @@
+version: '3.7'
+#networks:
+#  application:
+#    driver: bridge
+services:
+#  travel-app:
+#    image: sbtravelapp:0.0.1
+#    build:
+#      context: ../travel-booking-app
+#    restart: always
+#    depends_on:
+#      - coordinator
+#      - sbflightsv
+#      - sbhotelsv
+#      - sbtaxisv
+#    ports:
+#      - "8080:80"
+#    environment:
+#      - xms=256m
+#      - xmx=256m
+#      - FLIGHT_API=http://sbflightsv/api
+#      - HOTEL_API=http://sbhotelsv/api
+#      - TAXI_API=http://sbtaxisv/api
+  sbflightsv:
+    image: sbflightsv:0.0.1
+    container_name: sbflightsv:0.0.1
+    build:
+      context: ../flight-booking-service
+    restart: always
+    depends_on:
+      - coordinator
+    environment:
+      - xms=256m
+      - xmx=256m
+#  sbfhotelsv:
+#    image: sbfhotelsv:0.0.1
+#    build:
+#      context: ../hotel-booking-service
+#    restart: always
+#    depends_on:
+#      - coordinator
+#    environment:
+#      - xms=256m
+#      - xmx=256m
+#  sbtaxisv:
+#    image: sbtaxisv:0.0.1
+#    build:
+#      context: ../taxi-booking-service
+#    restart: always
+#    depends_on:
+#      - coordinator
+#    environment:
+#      - xms=256m
+#      - xmx=256m
+  coordinator:
+    image: quay.io/jbosstm/lra-coordinator:latest
+    environment:
+      LRA_HTTP_PORT: 80

@@ -1,5 +1,5 @@
 server:
-#  port: 8080
+  port: 80
 #  servlet:
 #    context-path: /api
   datasource:
@@ -11,6 +11,18 @@ server:
     spring.jpa.database-platform: org.hibernate.dialect.H2Dialect
 logging:
   level:
+    root: info
     org:
       zalando:
         logbook: TRACE
+camel:
+  lra:
+    enabled: true
+    coordinator-url: http://coordinator
+    local-participant-url: http://sbflightsv/api
+  servlet:
+    mapping:
+      context-path: /api/*
+      enabled: true
+  springboot:
+    main-run-controller: true

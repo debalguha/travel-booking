@@ -17,6 +17,6 @@ import java.util.Set;
 public class Taxi {
     @Id
     @GeneratedValue
-    private long id;
+    private Long id;
     private String taxiId;
 }

@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 public class Booking {
     @Id
     @GeneratedValue
-    private long id;
+    private Long id;
 
     private long customerId;
 

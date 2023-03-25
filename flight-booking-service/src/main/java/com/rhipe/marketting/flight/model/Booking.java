@@ -16,7 +16,7 @@ import java.util.Set;
 public class Booking {
     @Id
     @GeneratedValue
-    private long id;
+    private Long id;
 
     private long customerId;
 
