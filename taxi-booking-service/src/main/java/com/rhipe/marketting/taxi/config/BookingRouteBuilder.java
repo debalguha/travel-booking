@@ -1,6 +1,7 @@
 package com.rhipe.marketting.taxi.config;
 
 import com.rhipe.marketting.taxi.model.Booking;
+import com.rhipe.marketting.taxi.service.TaxiService;
 import com.rhipe.travel.booking.dto.TaxiBookingDTO;
 import com.rhipe.travel.booking.dto.TaxiResponseDTO;
 import com.rhipe.marketting.taxi.service.BookingService;
@@ -12,15 +13,17 @@ import org.apache.camel.model.rest.RestBindingMode;
 import org.apache.camel.model.rest.RestParamType;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 @RequiredArgsConstructor
 public class BookingRouteBuilder extends RouteBuilder {
 
     final BookingService bookingService;
+    final TaxiService taxiService;
 
     @Override
     public void configure() throws Exception {
-        restConfiguration().port(8083);
 
         rest()
                 .bindingMode(RestBindingMode.json)
@@ -29,6 +32,13 @@ public class BookingRouteBuilder extends RouteBuilder {
                 .param().name("name").type(RestParamType.path).description("The name of the Taxi").dataType("string").endParam()
                 .responseMessage().code(200).message("Taxi successfully returned").endResponseMessage()
                 .to("bean:taxiService?method=lookupTaxi(${header.name})");
+
+        rest()
+                .bindingMode(RestBindingMode.json)
+                .get("/taxi/names")
+                .outType(List.class)
+                .responseMessage().code(200).message("User successfully returned").endResponseMessage()
+                .to("bean:taxiService?method=allTaxiNums");
 
         rest()
                 .id("taxi-booking-route")

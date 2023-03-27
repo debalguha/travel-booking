@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
@@ -27,7 +28,14 @@ public class FlightService {
                 ).orElseThrow(() -> new RuntimeException("Can't find flight with Name:: "+name));
     }
 
+    public List<String> flightNames() {
+        return flightRepository.allFlightNames();
+    }
+
+
+
     private SeatResponseDTO map(Seat seat) {
         return new SeatResponseDTO(seat.getId(), seat.getSeatIdentifier());
     }
+
 }

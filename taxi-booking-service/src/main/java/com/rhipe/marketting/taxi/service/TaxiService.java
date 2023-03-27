@@ -5,6 +5,7 @@ import com.rhipe.marketting.taxi.repository.TaxiRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -15,6 +16,8 @@ public class TaxiService {
     public Optional<Taxi> lookupTaxi(long taxiId) {
         return taxiRepository.findById(taxiId);
     }
-
+    public List<String> allTaxiNums() {
+        return taxiRepository.allTaxiNums();
+    }
 
 }

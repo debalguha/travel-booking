@@ -12,7 +12,10 @@ import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.model.SagaPropagation;
 import org.apache.camel.model.rest.RestBindingMode;
 import org.apache.camel.model.rest.RestParamType;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 @Component
 @RequiredArgsConstructor
@@ -33,6 +36,13 @@ public class BookingRouteBuilder extends RouteBuilder {
                 .param().name("name").type(RestParamType.path).description("The name of the flight").dataType("string").endParam()
                 .responseMessage().code(200).message("User successfully returned").endResponseMessage()
                 .to("bean:flightService?method=lookupFlight(${header.name})");
+
+        rest()
+                .bindingMode(RestBindingMode.json)
+                .get("/flight/names")
+                .outType(List.class)
+                .responseMessage().code(200).message("User successfully returned").endResponseMessage()
+                .to("bean:flightService?method=flightNames");
 
         rest()
                 .id("flight-booking-route")

@@ -13,6 +13,8 @@ import org.apache.camel.model.rest.RestBindingMode;
 import org.apache.camel.model.rest.RestParamType;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 @RequiredArgsConstructor
 public class BookingRouteBuilder extends RouteBuilder {
@@ -31,6 +33,13 @@ public class BookingRouteBuilder extends RouteBuilder {
                 .param().name("name").type(RestParamType.path).description("The name of the Hotel").dataType("string").endParam()
                 .responseMessage().code(200).message("Hotel successfully returned").endResponseMessage()
                 .to("bean:hotelService?method=lookupHotel(${header.name})");
+
+        rest()
+                .bindingMode(RestBindingMode.json)
+                .get("/hotel/names")
+                .outType(List.class)
+                .responseMessage().code(200).message("User successfully returned").endResponseMessage()
+                .to("bean:hotelService?method=hotelNames");
 
         rest()
                 .id("hotel-booking-route")
