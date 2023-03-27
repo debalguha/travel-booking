@@ -1,7 +1,7 @@
 docker rmi $(docker image ls|grep 'sb.*sv' |tr -s ' '| cut -d' ' -f3)
 mvn clean package -f ./pom.xml
-docker build -t sbgatewaysv:latest ./travel-gateway
-docker build -t sbflightsv:latest ./flight-booking-service
-docker build -t sbhotelsv:latest ./hotel-booking-service
-docker build -t sbtaxisv:latest ./taxi-booking-service
-docker build -t sbtravelsv:latest ./travel-booking-app
+docker build -t travelapp/sbgatewaysv:latest ./travel-gateway
+docker build -t travelapp/sbflightsv:latest ./flight-booking-service
+docker build -t travelapp/sbhotelsv:latest ./hotel-booking-service
+docker build -t travelapp/sbtaxisv:latest ./taxi-booking-service
+docker build -t travelapp/sbtravelsv:latest ./travel-booking-app
