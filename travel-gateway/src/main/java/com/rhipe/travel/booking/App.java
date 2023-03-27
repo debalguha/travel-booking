@@ -16,16 +16,16 @@ public class App {
     public RouteLocator myRoutes(RouteLocatorBuilder builder) {
         return builder.routes()
                 .route(p -> p
-                        .path("/travel/{segment}")
+                        .path("/travel")
                         .uri("http://sbtravelsv/api/"))
                 .route(p -> p
-                        .path("/flight/{segment}")
+                        .path("/flight")
                         .uri("http://sbflightsv/api/"))
                 .route(p -> p
-                        .path("/taxi/{segment}")
+                        .path("/taxi")
                         .uri("http://sbtaxisv/api/"))
                 .route(p -> p
-                        .path("/hotel/{segment}")
+                        .path("/hotel")
                         .uri("http://sbhotelsv/api/"))
                 .build();
     }
