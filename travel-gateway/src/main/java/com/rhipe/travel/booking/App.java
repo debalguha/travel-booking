@@ -5,8 +5,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.gateway.route.RouteLocator;
 import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder;
 import org.springframework.context.annotation.Bean;
+import org.springframework.web.bind.annotation.RestController;
 
 @SpringBootApplication
+@RestController
 public class App {
     public static void main( String[] args ) {
         SpringApplication.run(App.class, args);
@@ -16,17 +18,17 @@ public class App {
     public RouteLocator myRoutes(RouteLocatorBuilder builder) {
         return builder.routes()
                 .route(p -> p
-                        .path("/travel")
-                        .uri("http://sbtravelsv/api/"))
+                        .path("/api/travel/{segment}")
+                        .uri("http://sbtravelsv/api/travel"))
                 .route(p -> p
-                        .path("/flight")
-                        .uri("http://sbflightsv/api/"))
+                        .path("/api/flight/{segment}")
+                        .uri("http://sbflightsv/api/flight"))
                 .route(p -> p
-                        .path("/taxi")
-                        .uri("http://sbtaxisv/api/"))
+                        .path("/api/taxi/{segment}")
+                        .uri("http://sbtaxisv/api/taxi"))
                 .route(p -> p
-                        .path("/hotel")
-                        .uri("http://sbhotelsv/api/"))
+                        .path("/api/hotel/{segment}")
+                        .uri("http://sbhotelsv/api/hotel"))
                 .build();
     }
 }

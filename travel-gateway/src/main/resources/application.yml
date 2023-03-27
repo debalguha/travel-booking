@@ -1,0 +1,8 @@
+server:
+#  port: 9090
+  servlet:
+    context-path: /api
+
+logging:
+  level:
+    root: DEBUG
