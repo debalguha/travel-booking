@@ -1,16 +1,11 @@
-package com.rhipe.marketting.flight;
+package com.rhipe.travel.booking;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-/**
- * Hello world!
- *
- */
 @SpringBootApplication
-public class FlightApp {
+public class TravelApp {
     public static void main( String[] args ) {
-        SpringApplication.run(FlightApp.class, args);
+        SpringApplication.run(TravelApp.class, args);
     }
-
 }
