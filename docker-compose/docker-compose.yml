@@ -4,8 +4,8 @@ version: '3.7'
 #    driver: bridge
 services:
   sbgatewaysv:
-    image: sbgatewaysv:latest
-    container_name: sbgatewaysv:latest
+    image: travelapp/sbgatewaysv:latest
+    container_name: sbgatewaysv
     build:
       context: ../travel-gateway
     ports:
@@ -17,7 +17,8 @@ services:
       - xms=256m
       - xmx=256m
   sbtravelsv:
-    image: sbtravelsv:latest
+    image: travelapp/sbtravelsv:latest
+    container_name: sbtravelsv
     build:
       context: ../travel-booking-app
     restart: always
@@ -33,8 +34,8 @@ services:
       - HOTEL_API=http://sbhotelsv/api
       - TAXI_API=http://sbtaxisv/api
   sbflightsv:
-    image: sbflightsv:latest
-    container_name: sbflightsv:latest
+    image: travelapp/sbflightsv:latest
+    container_name: sbflightsv
     build:
       context: ../flight-booking-service
     restart: always
@@ -44,7 +45,8 @@ services:
       - xms=256m
       - xmx=256m
   sbhotelsv:
-    image: sbfhotelsv:latest
+    image: travelapp/sbfhotelsv:latest
+    container_name: sbhotelsv
     build:
       context: ../hotel-booking-service
     restart: always
@@ -54,7 +56,8 @@ services:
       - xms=256m
       - xmx=256m
   sbtaxisv:
-    image: sbtaxisv:latest
+    image: travelapp/sbtaxisv:latest
+    container_name: sbtaxisv
     build:
       context: ../taxi-booking-service
     restart: always
