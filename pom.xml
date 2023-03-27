@@ -19,6 +19,7 @@
         <module>hotel-booking-service</module>
         <module>travel-booking-app</module>
         <module>common-data</module>
+        <module>travel-gateway</module>
     </modules>
     <packaging>pom</packaging>
     <properties>
@@ -26,7 +27,7 @@
         <spring-boot.version>3.0.4</spring-boot.version>
         <!--<camel.version>3.0.0-M4</camel.version>-->
         <camel.version>4.0.0-M2</camel.version>
-
+        <spring-cloud.version>2022.0.1</spring-cloud.version>
     </properties>
 
     <dependencyManagement>
@@ -54,82 +55,34 @@
                 <artifactId>common-data</artifactId>
                 <version>${project.version}</version>
             </dependency>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.h2database</groupId>
+                <artifactId>h2</artifactId>
+                <version>2.1.214</version>
+            </dependency>
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>1.18.26</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jeasy</groupId>
+                <artifactId>easy-random-core</artifactId>
+                <version>5.0.0</version>
+            </dependency>
         </dependencies>
 
     </dependencyManagement>
 
     <dependencies>
-        <!--			<dependency>
-                        <groupId>org.springframework.boot</groupId>
-                        <artifactId>spring-boot-starter-webflux</artifactId>
-                        <version>${spring-boot.version}</version>
-                    </dependency>-->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-jpa</artifactId>
-            <version>${spring-boot.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.springframework.boot</groupId>
-                    <artifactId>spring-boot-starter-tomcat</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.camel.springboot</groupId>
-            <artifactId>camel-undertow-starter</artifactId>
-        </dependency>
 
-        <dependency>
-            <groupId>org.apache.camel.springboot</groupId>
-            <artifactId>camel-servlet-starter</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-actuator</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.h2database</groupId>
-            <artifactId>h2</artifactId>
-            <version>2.1.214</version>
-        </dependency>
-        <dependency>
-            <groupId>org.jeasy</groupId>
-            <artifactId>easy-random-core</artifactId>
-            <version>5.0.0</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.camel.springboot</groupId>
-            <artifactId>camel-lra-starter</artifactId>
-            <version>${camel.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.camel.springboot</groupId>
-            <artifactId>camel-spring-boot-starter</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.camel.springboot</groupId>
-            <artifactId>camel-jackson-starter</artifactId>
-            <version>${camel.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <optional>true</optional>
-            <version>1.18.26</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <version>${spring-boot.version}</version>
-            <scope>test</scope>
-        </dependency>
     </dependencies>
 
 

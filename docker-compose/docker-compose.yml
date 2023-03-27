@@ -3,8 +3,21 @@ version: '3.7'
 #  application:
 #    driver: bridge
 services:
-  travel-app:
-    image: sbtravelapp:latest
+  sbgatewaysv:
+    image: sbgatewaysv:latest
+    container_name: sbgatewaysv:latest
+    build:
+      context: ../travel-gateway
+    ports:
+      - "8080:80"
+    depends_on:
+      - sbtravelsv
+    restart: always
+    environment:
+      - xms=256m
+      - xmx=256m
+  sbtravelsv:
+    image: sbtravelsv:latest
     build:
       context: ../travel-booking-app
     restart: always
@@ -13,8 +26,6 @@ services:
       - sbflightsv
       - sbhotelsv
       - sbtaxisv
-    ports:
-      - "8080:80"
     environment:
       - xms=256m
       - xmx=256m
