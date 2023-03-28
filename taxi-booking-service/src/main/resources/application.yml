@@ -13,7 +13,7 @@ server:
 camel:
   lra:
     enabled: true
-    coordinator-url: http://coordinator
+    coordinator-url: http://coordinator:8080
     local-participant-url: http://sbtaxisvsv/api
   servlet:
     mapping:
