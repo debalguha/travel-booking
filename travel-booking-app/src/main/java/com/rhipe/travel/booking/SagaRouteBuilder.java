@@ -37,7 +37,7 @@ public class SagaRouteBuilder extends RouteBuilder {
         rest()
                 .id("saga-starter")
                 .bindingMode(RestBindingMode.json)
-                .post("/book")
+                .post("/travel/book")
                 .consumes("application/json")
                 .type(BookingInfoDTO.class)
                 .to("direct:booking-saga");
