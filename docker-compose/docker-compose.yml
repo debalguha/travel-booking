@@ -33,6 +33,7 @@ services:
       - FLIGHT_API=http://sbflightsv/api
       - HOTEL_API=http://sbhotelsv/api
       - TAXI_API=http://sbtaxisv/api
+      - SERVER_PORT=80
   sbflightsv:
     image: travelapp/sbflightsv:latest
     container_name: sbflightsv
@@ -44,6 +45,7 @@ services:
     environment:
       - xms=256m
       - xmx=256m
+      - SERVER_PORT=80
   sbhotelsv:
     image: travelapp/sbfhotelsv:latest
     container_name: sbhotelsv
@@ -55,6 +57,7 @@ services:
     environment:
       - xms=256m
       - xmx=256m
+      - SERVER_PORT=80
   sbtaxisv:
     image: travelapp/sbtaxisv:latest
     container_name: sbtaxisv
@@ -66,6 +69,7 @@ services:
     environment:
       - xms=256m
       - xmx=256m
+      - SERVER_PORT=80
   coordinator:
     image: quay.io/jbosstm/lra-coordinator:latest
     environment:
