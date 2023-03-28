@@ -30,9 +30,9 @@ services:
     environment:
       - xms=256m
       - xmx=256m
-      - FLIGHT_API=http://sbflightsv/api
-      - HOTEL_API=http://sbhotelsv/api
-      - TAXI_API=http://sbtaxisv/api
+      - FLIGHT_API=http://sbflightsv/api/flight/book
+      - HOTEL_API=http://sbhotelsv/api/hotel/book
+      - TAXI_API=http://sbtaxisv/api/taxi/book
       - SERVER_PORT=80
   sbflightsv:
     image: travelapp/sbflightsv:latest

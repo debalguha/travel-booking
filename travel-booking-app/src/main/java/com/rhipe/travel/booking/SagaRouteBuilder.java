@@ -25,9 +25,9 @@ public class SagaRouteBuilder extends RouteBuilder {
         rest()
                 .id("saga-starter")
                 .bindingMode(RestBindingMode.json)
+                .post("/book")
                 .consumes("application/json")
                 .type(BookingInfoDTO.class)
-                .post("/book")
                 .to("direct:booking-saga");
 
         from("direct:booking-saga")
@@ -38,15 +38,15 @@ public class SagaRouteBuilder extends RouteBuilder {
                 .to("direct:taxi-saga");
 
         from("direct:flight-saga")
-                .to("rest:post:"+flightBookingEndpoint)
+                .to(flightBookingEndpoint)
                 .end();
 
         from("direct:hotel-saga")
-                .to("rest:post:"+hotelBookingEndpoint)
+                .to(hotelBookingEndpoint)
                 .end();
 
         from("direct:taxi-saga")
-                .to("rest:post:"+taxiBookingEndpoint)
+                .to(taxiBookingEndpoint)
                 .end();
 
 
