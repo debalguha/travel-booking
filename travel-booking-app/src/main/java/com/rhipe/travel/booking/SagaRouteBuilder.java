@@ -9,6 +9,7 @@ import com.rhipe.travel.booking.transformers.HotelBookingTransformer;
 import com.rhipe.travel.booking.transformers.TaxiBookingTransformer;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.builder.TransformerBuilder;
+import org.apache.camel.model.dataformat.JsonLibrary;
 import org.apache.camel.model.rest.RestBindingMode;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -52,16 +53,22 @@ public class SagaRouteBuilder extends RouteBuilder {
 
         from("direct:flight-saga")
                 .inputType(FlightBookingDTO.class)
+                .marshal()
+                .json(JsonLibrary.Jackson)
                 .to(flightBookingEndpoint)
                 .end();
 
         from("direct:hotel-saga")
                 .inputType(RoomBookingDTO.class)
+                .marshal()
+                .json(JsonLibrary.Jackson)
                 .to(hotelBookingEndpoint)
                 .end();
 
         from("direct:taxi-saga")
                 .inputType(TaxiBookingDTO.class)
+                .marshal()
+                .json(JsonLibrary.Jackson)
                 .to(taxiBookingEndpoint)
                 .end();
 
