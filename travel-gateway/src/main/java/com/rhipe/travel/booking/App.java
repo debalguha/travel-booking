@@ -2,19 +2,15 @@ package com.rhipe.travel.booking;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.cloud.gateway.route.RouteLocator;
-import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder;
-import org.springframework.context.annotation.Bean;
-import org.springframework.web.bind.annotation.RestController;
 
 @SpringBootApplication
-@RestController
+//@RestController
 public class App {
     public static void main( String[] args ) {
         SpringApplication.run(App.class, args);
     }
 
-    @Bean
+/*    @Bean
     public RouteLocator myRoutes(RouteLocatorBuilder builder) {
         return builder.routes()
                 .route(p -> p
@@ -30,5 +26,5 @@ public class App {
                         .path("/api/hotel/{segment}")
                         .uri("http://sbhotelsv/api/hotel"))
                 .build();
-    }
+    }*/
 }

@@ -14,6 +14,7 @@ import org.apache.camel.model.rest.RestParamType;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 @Component
 @RequiredArgsConstructor
@@ -45,20 +46,22 @@ public class BookingRouteBuilder extends RouteBuilder {
                 .id("hotel-booking-route")
                 .consumes("application/json")
                 .post("/room/book")
+                .param().type(RestParamType.header).name("correlation-id").required(true).endParam()
                 .bindingMode(RestBindingMode.json)
                 .type(RoomBookingDTO.class)
+                .outType(RoomBookingDTO.class)
                 .to("direct:hotel-saga");
 
         from("direct:hotel-saga")
                 .saga()
-                .propagation(SagaPropagation.MANDATORY)
-                .compensation("direct:cancel-booking")
-                    .transform().header(Exchange.SAGA_LONG_RUNNING_ACTION)
-                    .bean(bookingService, "bookRoom")
-                    .log("Room booking ${body} created");
+                    .propagation(SagaPropagation.MANDATORY)
+                    .option("correlation-id", header("correlation-id"))
+                    .compensation("direct:cancel-booking")
+                    .timeout(1, TimeUnit.MINUTES)
+                .bean(bookingService, "bookRoom(${body}, ${header.correlation-id})")
+                .log("Room booking ${body} created");
 
         from("direct:cancel-booking")
-                .transform().header(Exchange.SAGA_LONG_RUNNING_ACTION)
                 .bean(bookingService, "cancelBooking")
                 .log("Room booking ${body} cancel");
         log.info("Finished Building route!!");

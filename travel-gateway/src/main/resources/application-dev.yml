@@ -7,22 +7,22 @@ spring:
     gateway:
       routes:
         - id: travel-route
-          uri: http://sbtravelsv/api/travel
+          uri: http://localhost:9090/api/travel
           predicates:
             - Path=/api/travel/{segment}
 
         - id: flight-route
-          uri: http://sbflightsv/api/flight
+          uri: http://localhost:9091/api/flight
           predicates:
             - Path=/api/flight/{segment}
 
         - id: hotel-route
-          uri: http://sbhotelsv/api/hotel
+          uri: http://localhost:9092/api/hotel
           predicates:
             - Path=/api/hotel/{segment}
 
         - id: taxi-route
-          uri: http://sbtaxisv/api/taxi
+          uri: http://localhost:9093/api/taxi
           predicates:
             - Path=/api/taxi/{segment}
 

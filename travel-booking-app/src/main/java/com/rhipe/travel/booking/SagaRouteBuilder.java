@@ -7,6 +7,8 @@ import com.rhipe.travel.booking.dto.TaxiBookingDTO;
 import com.rhipe.travel.booking.transformers.FlightBookingTransformer;
 import com.rhipe.travel.booking.transformers.HotelBookingTransformer;
 import com.rhipe.travel.booking.transformers.TaxiBookingTransformer;
+import org.apache.camel.Exchange;
+import org.apache.camel.Expression;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.builder.TransformerBuilder;
 import org.apache.camel.model.dataformat.JsonLibrary;
@@ -45,32 +47,56 @@ public class SagaRouteBuilder extends RouteBuilder {
 
         from("direct:booking-saga")
                 .inputType(BookingInfoDTO.class)
+                .log("Correlation id from exchange header:: ${header.correlation-id}")
                 .saga()
-                .timeout(5, TimeUnit.SECONDS)
-                .to("direct:flight-saga")
-                .to("direct:hotel-saga")
-                .to("direct:taxi-saga");
+                    .setHeader("correlation-id", simple("${header.correlation-id}"))
+                    .timeout(1, TimeUnit.MINUTES)
+                    .multicast()
+                        .to("direct:flight-saga")
+                        .to("direct:hotel-saga")
+                        .to("direct:taxi-saga");
 
         from("direct:flight-saga")
                 .inputType(FlightBookingDTO.class)
+                .log("Correlation id from header:: ${header.correlation-id}")
                 .marshal()
                 .json(JsonLibrary.Jackson)
-                .to(flightBookingEndpoint)
+                .setHeader("Content-Type", constant("application/json"))
+                .setHeader("Accept", constant("application/json"))
+                .setHeader(Exchange.HTTP_METHOD, constant("POST"))
+                .removeHeader(Exchange.HTTP_PATH)
+                .to(flightBookingEndpoint + "?bridgeEndpoint=true")
+                .onCompletion()
+                .log("Saga completed!!")
                 .end();
 
         from("direct:hotel-saga")
                 .inputType(RoomBookingDTO.class)
+                .log("Correlation id from header:: ${header.correlation-id}")
                 .marshal()
                 .json(JsonLibrary.Jackson)
-                .to(hotelBookingEndpoint)
+                .setHeader("Content-Type", constant("application/json"))
+                .setHeader("Accept", constant("application/json"))
+                .setHeader(Exchange.HTTP_METHOD, constant("POST"))
+                .removeHeader(Exchange.HTTP_PATH)
+                .to(hotelBookingEndpoint + "?bridgeEndpoint=true")
+                .onCompletion()
+                .log("Saga completed!!")
                 .end();
 
         from("direct:taxi-saga")
                 .inputType(TaxiBookingDTO.class)
+                .log("Correlation id from header:: ${header.correlation-id}")
                 .marshal()
                 .json(JsonLibrary.Jackson)
-                .to(taxiBookingEndpoint)
-                .end();
+                .setHeader("Content-Type", constant("application/json"))
+                .setHeader("Accept", constant("application/json"))
+                .setHeader(Exchange.HTTP_METHOD, constant("POST"))
+                .removeHeader(Exchange.HTTP_PATH)
+                .to(taxiBookingEndpoint + "?bridgeEndpoint=true")
+                .onCompletion()
+                    .log("Saga completed!!")
+                    .end();
 
 
     }

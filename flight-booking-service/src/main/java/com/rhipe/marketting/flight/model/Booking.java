@@ -23,8 +23,11 @@ public class Booking {
     @OneToMany
     private Set<Seat> seats;
 
-    public Booking(long customerId, Set<Seat> seats) {
+    private String correlationId;
+
+    public Booking(long customerId, Set<Seat> seats, String correlationId) {
         this.customerId = customerId;
         this.seats = seats;
+        this.correlationId = correlationId;
     }
 }

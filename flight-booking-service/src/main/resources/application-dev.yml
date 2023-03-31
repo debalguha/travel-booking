@@ -1,5 +1,7 @@
 server:
-  port: 9090
+  port: 9091
+#  servlet:
+#    context-path: /api
   datasource:
     url: jdbc:h2:mem:mydb
     username: sa
@@ -11,21 +13,17 @@ logging:
   level:
     org:
       apache:
-        camel: debug
+        camel: DEBUG
+      zalando:
+        logbook: TRACE
 camel:
   lra:
     enabled: true
     coordinator-url: http://localhost:8080
-    local-participant-url: http://localhost:9090/api
+    local-participant-url: http://localhost:9091/api
   servlet:
     mapping:
       context-path: /api/*
       enabled: true
   springboot:
     main-run-controller: true
-flight:
-  api: http://localhost:9091/api/flight/book
-hotel:
-  api: http://localhost:9092/api/room/book
-taxi:
-  api: http://localhost:9093/api/taxi/book

@@ -20,8 +20,11 @@ public class Booking {
     @OneToOne
     private Taxi taxi;
 
-    public Booking(long customerId, Taxi taxi) {
+    private String correlationId;
+
+    public Booking(long customerId, Taxi taxi, String correlationId) {
         this.customerId = customerId;
         this.taxi = taxi;
+        this.correlationId = correlationId;
     }
 }

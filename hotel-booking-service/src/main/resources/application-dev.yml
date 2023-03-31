@@ -1,2 +1,11 @@
 server:
-  port: 9090
+  port: 9092
+logging:
+  level:
+    org:
+      apache:
+        camel: DEBUG
+camel:
+  lra:
+    coordinator-url: http://localhost:8080
+    local-participant-url: http://localhost:9092/api
